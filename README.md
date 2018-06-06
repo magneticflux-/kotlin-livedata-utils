@@ -2,8 +2,7 @@
 
  [![Download](https://api.bintray.com/packages/magneticflux/kotlin-livedata-utils/kotlin-livedata-utils/images/download.svg) ](https://bintray.com/magneticflux/kotlin-livedata-utils/kotlin-livedata-utils/_latestVersion)
  [![GitHub tag](https://img.shields.io/github/tag/magneticflux-/kotlin-livedata-utils.svg)](https://github.com/magneticflux-/kotlin-livedata-utils/tags) 
-[![Build Status](https://travis-ci.org/magneticflux-/kotlin-livedata-utils.svg?branch=master)](https://travis-ci.org/magneticflux-/kotlin-livedata-utils) 
-[![codecov](https://codecov.io/gh/magneticflux-/kotlin-livedata-utils/branch/master/graph/badge.svg)](https://codecov.io/gh/magneticflux-/kotlin-livedata-utils) 
+[![Build Status](https://travis-ci.com/magneticflux-/kotlin-livedata-utils.svg?branch=master)](https://travis-ci.com/magneticflux-/kotlin-livedata-utils) 
 [![GitHub issues](https://img.shields.io/github/issues/magneticflux-/kotlin-livedata-utils.svg)](https://github.com/magneticflux-/kotlin-livedata-utils/issues) 
 [![GitHub PRs](https://img.shields.io/github/issues-pr/magneticflux-/kotlin-livedata-utils.svg)](https://github.com/magneticflux-/kotlin-livedata-utils/pulls) 
 [![GitHub Contributors](https://img.shields.io/github/contributors/magneticflux-/kotlin-livedata-utils.svg)](https://github.com/magneticflux-/kotlin-livedata-utils/graphs/contributors) 
