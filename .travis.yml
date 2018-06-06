@@ -21,10 +21,9 @@ android:
     - android-27
 
     # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-    - addon-google_apis-google-27
+    #- extra-google-google_play_services
+    #- extra-google-m2repository
+    #- extra-android-m2repository
 
 #Skipping install step to avoid having Travis run arbitrary './gradlew assemble' task
 # https://docs.travis-ci.com/user/customizing-the-build/#Skipping-the-Installation-Step
