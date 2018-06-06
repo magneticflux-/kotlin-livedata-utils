@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/KotlinLiveDataUtils.iml" filepath="$PROJECT_DIR$/KotlinLiveDataUtils.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kotlin-livedata-utils/kotlin-livedata-utils.iml" filepath="$PROJECT_DIR$/.idea/modules/kotlin-livedata-utils/kotlin-livedata-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlin-livedata-utils.iml" filepath="$PROJECT_DIR$/kotlin-livedata-utils.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlin-livedata-utils/kotlin-livedata-utils-kotlin-livedata-utils.iml" filepath="$PROJECT_DIR$/kotlin-livedata-utils/kotlin-livedata-utils-kotlin-livedata-utils.iml" />
     </modules>
   </component>
 </project>
