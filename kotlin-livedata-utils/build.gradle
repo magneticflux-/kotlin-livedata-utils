@@ -38,7 +38,7 @@ publishing {
 		kotlinLiveDataUtils(MavenPublication) {
 			from components.android
 			//noinspection GroovyAssignabilityCheck
-			artifact androidSourcesJar
+			artifact sourcesJar
 			//noinspection GroovyAssignabilityCheck
 			artifact dokkaJavadocJar
 		}
@@ -57,7 +57,7 @@ task dokkaJavadocJar(type: Jar, dependsOn: dokka) {
 	from dokka.outputDirectory
 }
 
-task androidSourcesJar(type: Jar) {
+task sourcesJar(type: Jar) {
 	classifier = 'sources'
 	from android.sourceSets.main.java.srcDirs
 }
