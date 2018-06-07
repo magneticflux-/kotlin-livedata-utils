@@ -68,12 +68,15 @@ spotless {
 	groovyGradle { greclipse() }
 }
 
+tasks.withType(Test) { useJUnitPlatform() }
+
 dependencies {
 	// Kotlin
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 	// LiveData
 	implementation "android.arch.lifecycle:livedata:$lifecycle_version"
+	testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
 	// Hamcrest
 	testImplementation 'org.hamcrest:java-hamcrest:2.0.0.0'
@@ -81,6 +84,4 @@ dependencies {
 	// JUnit
 	testImplementation "org.junit.jupiter:junit-jupiter-api:$junit_version"
 	testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junit_version"
-	testRuntimeOnly "org.junit.vintage:junit-vintage-engine:$junit_version"
-	testCompileOnly 'junit:junit:4.12'
 }
