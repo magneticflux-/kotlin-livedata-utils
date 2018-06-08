@@ -1,5 +1,6 @@
 package com.github.magneticflux.livedata
 
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.MutableLiveData
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -8,6 +9,25 @@ import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(InstantTaskExecutorExtension::class)
 class LiveDataUnitTest {
+
+    @Test
+    fun `when two values are zipped together, they ignore nulls`() {
+        val v1 = MutableLiveData<String>()
+        val v2 = MutableLiveData<String>()
+
+        val pair = v1 zipTo v2
+
+        v1.value = null
+        v2.value = null
+        Assertions.assertEquals(null, pair.awaitValue)
+
+        v1.value = "Hello"
+        v2.value = "world"
+        Assertions.assertEquals("Hello" to "world", pair.awaitValue)
+
+        v1.value = "Goodbye"
+        Assertions.assertEquals("Goodbye" to "world", pair.awaitValue)
+    }
 
     @Test
     fun `when a null value is passed to a map, null is returned`() {
@@ -31,25 +51,6 @@ class LiveDataUnitTest {
 
         nullable.value = "Hello"
         Assertions.assertEquals("Hello world!", mapped.awaitValue)
-    }
-
-    @Test
-    fun `when two values are zipped together, they ignore nulls`() {
-        val v1 = MutableLiveData<String>()
-        val v2 = MutableLiveData<String>()
-
-        val pair = v1 zipTo v2
-
-        v1.value = null
-        v2.value = null
-        Assertions.assertEquals(null, pair.awaitValue)
-
-        v1.value = "Hello"
-        v2.value = "world"
-        Assertions.assertEquals("Hello" to "world", pair.awaitValue)
-
-        v1.value = "Goodbye"
-        Assertions.assertEquals("Goodbye" to "world", pair.awaitValue)
     }
 
     @Test
@@ -92,5 +93,41 @@ class LiveDataUnitTest {
 
         nullable.value = "Hello world!"
         Assertions.assertEquals("Hello world!", mapped.awaitValue)
+    }
+
+    @Test
+    fun `when a bidirectional map is established, changes flow in both directions`() {
+
+        val aAndB = MediatorLiveData<Pair<String, String>>()
+        val a = aAndB.bidiMap(
+                { pair: Pair<String, String>, _: String? ->
+                    pair.first
+                },
+                { oldPair: Pair<String, String>, newString: String ->
+                    oldPair.copy(first = newString)
+                }
+        )
+        val b = aAndB.bidiMap(
+                { pair: Pair<String, String>, _: String? ->
+                    pair.second
+                },
+                { oldPair: Pair<String, String>, newString: String ->
+                    oldPair.copy(second = newString)
+                }
+        )
+
+
+        aAndB.value = "abc" to "123"
+
+        Assertions.assertEquals(a.awaitValue, "abc")
+        Assertions.assertEquals(b.awaitValue, "123")
+
+        a.value = "xyz"
+
+        Assertions.assertEquals(aAndB.awaitValue, "xyz" to "123")
+
+        b.value = "789"
+
+        Assertions.assertEquals(aAndB.awaitValue, "xyz" to "789")
     }
 }

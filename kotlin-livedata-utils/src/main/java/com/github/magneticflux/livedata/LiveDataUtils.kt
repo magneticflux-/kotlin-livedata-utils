@@ -2,7 +2,6 @@ package com.github.magneticflux.livedata
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 
 /**
@@ -12,7 +11,7 @@ import android.arch.lifecycle.Transformations
  *
  * @param a the first LiveData
  * @param b the second LiveData
- * @since 1.2.0
+ * @since 0.1.0
  * @author Mitchell Skaggs
  */
 fun <A, B> zipLiveData(a: LiveData<A>, b: LiveData<B>): LiveData<Pair<A, B>> {
@@ -42,7 +41,7 @@ fun <A, B> zipLiveData(a: LiveData<A>, b: LiveData<B>): LiveData<Pair<A, B>> {
  * This is merely an extension function for [zipLiveData].
  *
  * @see zipLiveData
- * @since 1.2.0
+ * @since 0.1.0
  * @author Mitchell Skaggs
  */
 infix fun <A, B> LiveData<A>.zipTo(b: LiveData<B>): LiveData<Pair<A, B>> = zipLiveData(this, b)
@@ -51,7 +50,7 @@ infix fun <A, B> LiveData<A>.zipTo(b: LiveData<B>): LiveData<Pair<A, B>> = zipLi
  * This is an extension function that calls to [Transformations.map]. If null is received, null is returned instead of calling the provided function.
  *
  * @see Transformations.map
- * @since 1.2.0
+ * @since 0.1.0
  * @author Mitchell Skaggs
  */
 inline fun <A, B> LiveData<A>.map(crossinline function: (A) -> B): LiveData<B> =
@@ -63,7 +62,7 @@ inline fun <A, B> LiveData<A>.map(crossinline function: (A) -> B): LiveData<B> =
  * This is an extension function that calls to [Transformations.map]. It exposes the possibilities of receiving and returning null.
  *
  * @see Transformations.map
- * @since 1.2.0
+ * @since 0.1.0
  * @author Mitchell Skaggs
  */
 fun <A, B> LiveData<A>.mapNullable(function: (A?) -> B?): LiveData<B> =
@@ -73,7 +72,7 @@ fun <A, B> LiveData<A>.mapNullable(function: (A?) -> B?): LiveData<B> =
  * This is an extension function that calls to [Transformations.switchMap]. If null is received, null is returned instead of calling the provided function.
  *
  * @see Transformations.switchMap
- * @since 1.2.0
+ * @since 0.1.0
  * @author Mitchell Skaggs
  */
 fun <A, B> LiveData<A>.switchMap(function: (A) -> LiveData<B>): LiveData<B> =
@@ -85,53 +84,33 @@ fun <A, B> LiveData<A>.switchMap(function: (A) -> LiveData<B>): LiveData<B> =
  * This is an extension function that calls to [Transformations.switchMap]. It exposes the possibilities of receiving and returning null.
  *
  * @see Transformations.switchMap
- * @since 1.2.0
+ * @since 0.1.0
  * @author Mitchell Skaggs
  */
 fun <A, B> LiveData<A>.switchMapNullable(function: (A?) -> LiveData<B>?): LiveData<B> =
         Transformations.switchMap(this, function)
 
-/*
-val aAndB = MutableLiveData<Pair<String, String>>()
-val a = aAndB.bidiMap(
-        { pair: Pair<String, String>, _: String? ->
-            pair.first
-        },
-        { oldPair: Pair<String, String>, newString: String ->
-            oldPair.copy(first = newString)
-        }
-)
-val b = aAndB.bidiMap(
-        { pair: Pair<String, String>, _: String? ->
-            pair.second
-        },
-        { oldPair: Pair<String, String>, newString: String ->
-            oldPair.copy(second = newString)
-        }
-)
-
-aAndB.observeForever { println("A+B: $it") }
-a.observeForever { println("A: $it") }
-b.observeForever { println("B: $it") }
-
-aAndB.value = "abc" to "123"
-
-a.value = "xyz"
-b.value = "789"
-*/
-fun <A, B> MutableLiveData<A>.bidiMap(apply: (currentA: A, oldB: B?) -> B?, unapply: (oldA: A, currentB: B) -> A?): MutableLiveData<B> {
+/**
+ * This is an extension function that links two [MediatorLiveData] instances using a function [apply] and its inverse, [unapply]. Changes made to either [MediatorLiveData] are reflected in the other based on the two functions.
+ *
+ * @param apply A function from [A] to [B]
+ * @param unapply A function from [B] to [A], the inverse of [apply]
+ * @since 0.1.0
+ * @author Mitchell Skaggs
+ */
+fun <A, B> MediatorLiveData<A>.bidiMap(apply: (currentA: A, oldB: B?) -> B?, unapply: (oldA: A, currentB: B) -> A?): MediatorLiveData<B> {
     return MediatorLiveData<B>().apply {
-        addSource(this@bidiMap) {
+        this@apply.addSource(this@bidiMap) {
             it?.let { a ->
-                this.value.let { b ->
+                this@apply.value.let { b ->
                     val newB = apply(a, b)
                     if (b != newB)
-                        this.value = newB
+                        this@apply.value = newB
                 }
             }
         }
 
-        this.observeForever {
+        this@bidiMap.addSource(this@apply) {
             it?.let { b ->
                 this@bidiMap.value?.let { a ->
                     val newA = unapply(a, b)
