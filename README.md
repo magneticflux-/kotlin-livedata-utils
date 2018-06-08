@@ -10,6 +10,28 @@
 
 [![Get automatic notifications about new "kotlin-livedata-utils" versions](https://www.bintray.com/docs/images/bintray_badge_color.png)](https://bintray.com/magneticflux/kotlin-livedata-utils/kotlin-livedata-utils?source=watch)
 
+Usage:
+
+```Gradle
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'com.github.magneticflux:kotlin-livedata-utils:$latest_version'
+}
+```
+
+```Kotlin
+import com.github.magneticflux.livedata.*
+
+// ...
+{
+    // ...
+    return uuid.switchMap { itemRepository.getItemByUUID(it) }
+}
+```
+
 ---
 Copyright 2018, Mitchell Skaggs
 
