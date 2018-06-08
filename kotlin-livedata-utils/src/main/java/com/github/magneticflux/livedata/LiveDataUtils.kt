@@ -5,7 +5,7 @@ import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.Transformations
 
 /**
- * This function creates a [LiveData] of a [Pair] of the two types provided. The resulting LiveData is updated whenever either input LiveData updates and both LiveData have updated at least once before.
+ * This function creates a [LiveData] of a [Pair] of the two types provided. The resulting LiveData is updated whenever either input LiveData updates and both LiveData have updated to a non-null value at least once before.
  *
  * If the zip of A and B is C, and A and B are updated in this pattern: `AABA`, C would be updated twice (once with the second A value and first B value, and once with the third A value and first B value).
  *
@@ -38,6 +38,41 @@ fun <A, B> zipLiveData(a: LiveData<A>, b: LiveData<B>): LiveData<Pair<A, B>> {
 }
 
 /**
+ * This function creates a [LiveData] of a [Pair] of the two types provided. The resulting LiveData is updated whenever either input LiveData updates and both LiveData have updated at least once before.
+ *
+ * @see zipLiveData
+ * @param a the first LiveData
+ * @param b the second LiveData
+ * @since 0.2.0
+ * @author Mitchell Skaggs
+ */
+fun <A, B> zipLiveDataNullable(a: LiveData<A>, b: LiveData<B>): LiveData<Pair<A?, B?>> {
+    return MediatorLiveData<Pair<A?, B?>>().apply {
+        var lastA: A? = null
+        var hasAUpdatedOnce = false
+
+        var lastB: B? = null
+        var hasBUpdatedOnce = false
+
+        fun update() {
+            if (hasAUpdatedOnce && hasBUpdatedOnce)
+                this.value = Pair(lastA, lastB)
+        }
+
+        addSource(a) {
+            lastA = it
+            hasAUpdatedOnce = true
+            update()
+        }
+        addSource(b) {
+            lastB = it
+            hasBUpdatedOnce = true
+            update()
+        }
+    }
+}
+
+/**
  * This is merely an extension function for [zipLiveData].
  *
  * @see zipLiveData
@@ -45,6 +80,15 @@ fun <A, B> zipLiveData(a: LiveData<A>, b: LiveData<B>): LiveData<Pair<A, B>> {
  * @author Mitchell Skaggs
  */
 infix fun <A, B> LiveData<A>.zipTo(b: LiveData<B>): LiveData<Pair<A, B>> = zipLiveData(this, b)
+
+/**
+ * This is merely an extension function for [zipLiveDataNullable].
+ *
+ * @see zipLiveData
+ * @since 0.1.0
+ * @author Mitchell Skaggs
+ */
+infix fun <A, B> LiveData<A>.zipToNullable(b: LiveData<B>): LiveData<Pair<A?, B?>> = zipLiveDataNullable(this, b)
 
 /**
  * This is an extension function that calls to [Transformations.map]. If null is received, null is returned instead of calling the provided function.

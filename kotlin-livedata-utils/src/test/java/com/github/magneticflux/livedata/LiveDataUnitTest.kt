@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 class LiveDataUnitTest {
 
     @Test
-    fun `when two values are zipped together, they ignore nulls`() {
+    fun `when two values are zipped together with zipTo, they ignore nulls`() {
         val v1 = MutableLiveData<String>()
         val v2 = MutableLiveData<String>()
 
@@ -20,6 +20,25 @@ class LiveDataUnitTest {
         v1.value = null
         v2.value = null
         Assertions.assertEquals(null, pair.awaitValue)
+
+        v1.value = "Hello"
+        v2.value = "world"
+        Assertions.assertEquals("Hello" to "world", pair.awaitValue)
+
+        v1.value = "Goodbye"
+        Assertions.assertEquals("Goodbye" to "world", pair.awaitValue)
+    }
+
+    @Test
+    fun `when two values are zipped together with zipToNullable, they encounter nulls`() {
+        val v1 = MutableLiveData<String>()
+        val v2 = MutableLiveData<String>()
+
+        val pair = v1 zipToNullable v2
+
+        v1.value = null
+        v2.value = null
+        Assertions.assertEquals(null to null, pair.awaitValue)
 
         v1.value = "Hello"
         v2.value = "world"
