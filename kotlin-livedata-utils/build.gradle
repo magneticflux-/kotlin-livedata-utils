@@ -2,7 +2,8 @@ plugins {
 	id 'com.jfrog.bintray'
 	id 'org.shipkit.bintray'
 	id 'com.diffplug.gradle.spotless' version '3.13.0'
-	id 'com.github.ben-manes.versions' version '0.17.0'
+	id 'se.patrikerdes.use-latest-versions' version '0.2.3'
+	id 'com.github.ben-manes.versions' version '0.20.0'
 	id "com.dorongold.task-tree" version '1.3'
 }
 
