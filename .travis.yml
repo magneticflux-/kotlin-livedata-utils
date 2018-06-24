@@ -18,7 +18,7 @@ android:
     - build-tools-27.0.3
 
     # The SDK version used to compile your project
-    - android-27
+    - android-28
 
     # Additional components
     #- extra-google-google_play_services
@@ -47,3 +47,9 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
+
+after_failure:
+  - cat ~/.m2/repository/com/github/magneticflux/kotlin-livedata-utils/0.2.0/kotlin-livedata-utils-0.2.0.pom
+  - cat ~/.m2/repository/com/github/magneticflux/kotlin-livedata-utils/0.3.0/kotlin-livedata-utils-0.3.0.pom
+  - cat ~/.m2/repository/com/github/magneticflux/kotlin-livedata-utils/0.3.1/kotlin-livedata-utils-0.3.1.pom
+  - cat ~/.m2/repository/com/github/magneticflux/kotlin-livedata-utils/maven-metadata-local.xml

@@ -1,7 +1,7 @@
 package com.github.magneticflux.livedata
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 
 /**
  * Waits a ***very*** short amount of time for a value to be present. Must be used with [InstantTaskExecutorExtension].
