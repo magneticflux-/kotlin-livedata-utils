@@ -45,10 +45,6 @@ publishing {
 		kotlinLiveDataUtils(MavenPublication) {
 			from components.android
 
-			groupId project.group
-			artifactId project.name
-			version project.version
-
 			//noinspection GroovyAssignabilityCheck
 			artifact sourcesJar
 			//noinspection GroovyAssignabilityCheck

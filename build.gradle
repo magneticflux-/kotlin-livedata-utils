@@ -24,7 +24,7 @@ buildscript {
 
 plugins {
 	id 'org.shipkit.java' version '2.0.25'
-	id 'com.jfrog.bintray' version '1.8.0'
+	//id 'com.jfrog.bintray' version '1.8.1'
 }
 
 allprojects {
