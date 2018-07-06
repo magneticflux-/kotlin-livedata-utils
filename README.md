@@ -10,7 +10,7 @@
 
 [![Get automatic notifications about new "kotlin-livedata-utils" versions](https://www.bintray.com/docs/images/bintray_badge_color.png)](https://bintray.com/magneticflux/kotlin-livedata-utils/kotlin-livedata-utils?source=watch)
 
-Usage:
+### Usage:
 
 ```Gradle
 repositories {
@@ -31,6 +31,13 @@ import com.github.magneticflux.livedata.*
     return uuid.switchMap { itemRepository.getItemByUUID(it) }
 }
 ```
+
+### Compatibility:
+
+Library Version       | Android Support Library                 | Android API Level
+----------------------|-----------------------------------------|------------------
+ver ∈ \[0.1.0, 0.2.X] | `android.arch.lifecycle:livedata`       | ver ≥ 14
+ver ∈ \[0.3.0, 0.3.X] | `androidx.lifecycle:lifecycle-livedata` | ver ≥ 14
 
 ---
 Copyright 2018, Mitchell Skaggs
