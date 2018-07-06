@@ -83,8 +83,8 @@ dependencies {
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
 	// LiveData
-	implementation 'androidx.lifecycle:lifecycle-livedata:2.0.0-alpha1'
-	testImplementation 'androidx.arch.core:core-testing:2.0.0-alpha1'
+	implementation 'androidx.lifecycle:lifecycle-livedata:2.0.0-beta01'
+	testImplementation 'androidx.arch.core:core-testing:2.0.0-beta01'
 
 	// Hamcrest
 	testImplementation 'org.hamcrest:java-hamcrest:2.0.0.0'
