@@ -35,12 +35,8 @@ android {
 	flavorDimensions "support-version"
 
 	productFlavors {
-		android {
-			dimension "support-version"
-		}
-		androidx {
-			dimension "support-version"
-		}
+		android { dimension "support-version" }
+		androidx { dimension "support-version" }
 	}
 
 	compileOptions {
