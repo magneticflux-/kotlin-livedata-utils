@@ -32,6 +32,17 @@ android {
 		}
 	}
 
+	flavorDimensions "support-version"
+
+	productFlavors {
+		android {
+			dimension "support-version"
+		}
+		androidx {
+			dimension "support-version"
+		}
+	}
+
 	compileOptions {
 		sourceCompatibility JavaVersion.VERSION_1_8
 		targetCompatibility JavaVersion.VERSION_1_8
@@ -42,8 +53,20 @@ group 'com.github.magneticflux'
 
 publishing {
 	publications {
-		kotlinLiveDataUtils(MavenPublication) {
-			from components.android
+		kotlinLiveDataUtilsAndroid(MavenPublication) {
+			from components.androidAndroidRelease
+
+			artifactId 'kotlin-livedata-utils-android-support'
+
+			//noinspection GroovyAssignabilityCheck
+			artifact sourcesJar
+			//noinspection GroovyAssignabilityCheck
+			artifact dokkaJavadocJar
+		}
+		kotlinLiveDataUtilsAndroidX(MavenPublication) {
+			from components.androidAndroidxRelease
+
+			artifactId 'kotlin-livedata-utils-androidx'
 
 			//noinspection GroovyAssignabilityCheck
 			artifact sourcesJar
@@ -82,9 +105,12 @@ dependencies {
 	// Kotlin
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-	// LiveData
-	implementation 'androidx.lifecycle:lifecycle-livedata:2.0.0-beta01'
-	testImplementation 'androidx.arch.core:core-testing:2.0.0-beta01'
+	// LiveData AndroidX
+	androidxImplementation 'androidx.lifecycle:lifecycle-livedata:2.0.0-beta01'
+	testAndroidxImplementation 'androidx.arch.core:core-testing:2.0.0-beta01'
+
+	// LiveData Android
+	androidImplementation 'android.arch.lifecycle:livedata:1.1.1'
 
 	// Hamcrest
 	testImplementation 'org.hamcrest:java-hamcrest:2.0.0.0'
